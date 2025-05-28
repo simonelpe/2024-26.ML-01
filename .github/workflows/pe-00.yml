@@ -7,3 +7,6 @@ jobs:
     steps:
       - run: echo 'ciao mondo'
       - run: echo 'ciao mondo 2'
+      - run: python --version
+      - run: ifconfig
+      - run: lsb_release -d
