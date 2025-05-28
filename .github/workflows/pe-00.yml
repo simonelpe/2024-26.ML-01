@@ -17,8 +17,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.7' # Sostituisci con la versione 3.12.7
-      - uses: actions/checkout@v4
       - run: python --version
+      - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             .github
