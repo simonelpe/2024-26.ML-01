@@ -7,7 +7,7 @@ jobs:
     steps:
       - run: echo 'ciao mondo'
       - run: echo 'ciao mondo 2'
-      - run: python --version
+
 #      - run: ifconfig
 #      - run: lsb_release -d
 #      - run: pip list
@@ -18,9 +18,12 @@ jobs:
         with:
           python-version: '3.12.7' # Sostituisci con la versione 3.12.7
       - run: python --version
+      - run: pip install pandas numpy scikit-learn joblib
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             .github
             pe
+      - run: python test_training_github.py
+        working-directory: ./pe
       - run: ls -la
