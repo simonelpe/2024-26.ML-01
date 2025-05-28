@@ -11,16 +11,13 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.svm import SVR
 from sklearn.metrics import median_absolute_error, mean_absolute_error, mean_absolute_percentage_error, make_scorer
 
+print('import fatti')
+df = pd.read_csv('Smart_Farming_Crop_Yield_2024.csv')
 
-df = pd.read_csv('/Smart_Farming_Crop_Yield_2024.csv')
-
-df.isna().sum().sum()
+print('dataset importato')
 
 df['crop_disease_status'] = df['crop_disease_status'].fillna('None')
 df['irrigation_type'] = df['irrigation_type'].fillna('None')
-
-df.isna().sum().sum()
-
 
 
 def ciclic_encoding(df, col, max_val):
@@ -43,6 +40,8 @@ df = ciclic_encoding(df, 'sowing_date', 12)
 
 df.drop(['farm_id', 'sensor_id', 'timestamp', 'latitude', 'longitude', 'sowing_date', 'harvest_date'], axis=1, inplace=True)
 
+print('dataset preprocessato')
+
 x = df.drop(columns=['yield_kg_per_hectare'])
 y = df['yield_kg_per_hectare']
 
@@ -50,6 +49,8 @@ y = df['yield_kg_per_hectare']
 sklearn.set_config(transform_output='pandas')
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+print('dataset splittato')
 
 categories_list = [
     ['Central USA', 'East Africa', 'North India', 'South USA', 'South India'],  # region
@@ -70,11 +71,15 @@ encoder = ColumnTransformer(
     force_int_remainder_cols=False
 )
 
+print('encoder creato')
+
 pipe = Pipeline([
     ('encoder', encoder),
 #    ('standardization', StandardScaler()),
     ('regressor', RandomForestRegressor())
 ])
+
+print('pipe creata')
 
 pipe.get_params()
 
@@ -97,6 +102,8 @@ params = [
     },
 ]
 
+print('parametri impostati')
+
 grid_search = GridSearchCV(
     estimator = pipe,
     param_grid= params,
@@ -107,29 +114,37 @@ grid_search = GridSearchCV(
     verbose = 4
 )
 
+print('grid search creata')
+
 grid_search.fit(x_train, y_train)
+
+print('grid search fittata')
 
 """Risultati con encoder passthrough"""
 
-grid_search.best_params_
+print(grid_search.best_params_)
 #{'encoder__encoder': OneHotEncoder(drop='first', sparse_output=False),
 # 'regressor__criterion': 'squared_error',
 # 'regressor__max_depth': 9,
 # 'regressor__n_estimators': 100}
 
-grid_search.best_score_
+print(grid_search.best_score_)
 # np.float64(-1009.2749072662275)
 
 best_grid = grid_search.best_estimator_
 
 y_test_pred = best_grid.predict(x_test)
 
-mean_absolute_error(y_test, y_test_pred)
+print('il mae è: '+str(mean_absolute_error(y_test, y_test_pred)))
 # 1039.7284892361877
 
-mean_absolute_percentage_error(y_test, y_test_pred)
+print('il mape è: '+str(mean_absolute_percentage_error(y_test, y_test_pred)))
+
 # 0.2960973580960324
 
 
 joblib.dump(best_grid, 'best_grid.joblib')
 #best_grid = joblib.load('best_grid.joblib')
+
+print('modello salvato')
+print('fine del test')
