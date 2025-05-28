@@ -27,3 +27,9 @@ jobs:
       - run: python test_training_github.py
         working-directory: ./pe
       - run: ls -la
+        working-directory: ./pe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: modello_finale
+          path: pe/best_grid.joblib
+        

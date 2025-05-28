@@ -90,15 +90,15 @@ params = [
     {
         'encoder__encoder': [OneHotEncoder(categories = categories_list, sparse_output = False, drop = "first")],
         #'encoder__encoder': [OneHotEncoder(sparse_output=False, drop='first')],
-        'regressor__n_estimators' : [100, 150, 200],
+        'regressor__n_estimators' : [100, 150],
         'regressor__criterion' : ['squared_error', 'absolute_error'],
-        'regressor__max_depth' : [3, 4, 5, 6, 7, 9]
+        'regressor__max_depth' : [3, 4, 5, 6]
     },
     {
         'encoder__encoder': [OrdinalEncoder()],
-        'regressor__n_estimators' : [100, 150, 200],
+        'regressor__n_estimators' : [100, 150],
         'regressor__criterion' : ['squared_error', 'absolute_error'],
-        'regressor__max_depth' : [3, 4, 5, 6, 7, 9,]
+        'regressor__max_depth' : [3, 4, 5, 6]
     },
 ]
 
