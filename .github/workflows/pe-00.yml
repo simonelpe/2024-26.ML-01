@@ -1,0 +1,8 @@
+name: action di pe # questa è la top level key di nome name
+on:  # questa è key di nome on che è un dizionario
+  push:
+jobs: 
+  ciao:
+    runs-on: ubuntu-latest
+    steps:
+      - echo 'ciao mondo'
