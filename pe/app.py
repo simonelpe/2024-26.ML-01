@@ -54,6 +54,10 @@ def hello():
     infer_results = modello.predict(parameters)
     end = time.perf_counter()
     latency = end - start
+    #print(latency)
+    # stampa type di latency
+    #print(type(latency))
+
 
     response_data = {
         'result': {
