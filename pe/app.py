@@ -63,7 +63,6 @@ def hello():
 	    "stats": {
 		    "model_latency":latency
 	    }
-
     }
 
     return jsonify(response_data)
