@@ -11,4 +11,4 @@ def test_hello(client):
     response = client.post("/infer", json={"name": "Alessandro"})
     assert response.status_code == 200
     data = response.get_json()
-    assert data == {"message": "Hello Alessandro!"}
+    assert data[result][value] == "Hello Alessandro!"

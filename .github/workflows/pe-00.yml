@@ -2,7 +2,7 @@ name: action di pe # questa è la top level key di nome name
 on:  # questa è key di nome on che è un dizionario
   push:
 jobs: 
-  ciao:
+  job1:
     runs-on: ubuntu-latest
     steps:
       - run: echo 'ciao mondo'
@@ -32,4 +32,25 @@ jobs:
         with:
           name: modello_finale
           path: pe/best_grid.joblib
-        
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7' # Sostituisci con la versione 3.12.7
+      - run: python --version
+      - run: pip install flask pytest
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            pe
+      - uses: actions/download-artifact@v4
+        with:
+          name: modello_finale
+          path: ./pe
+      - run: ls -la
+        working-directory: ./pe
+      - run: pytest test_app.py
+        working-directory: ./pe
