@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: '3.12.7' # Sostituisci con la versione 3.12.7
       - run: python --version
-      - run: pip install flask pytest joblib
+      - run: pip install pandas numpy scikit-learn joblib flask pytest
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
